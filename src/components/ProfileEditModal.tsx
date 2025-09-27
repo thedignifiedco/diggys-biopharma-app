@@ -13,7 +13,7 @@ type ProfileEditModalProps = {
 };
 
 export default function ProfileEditModal({ isOpen, onClose, onUpdated, user, accessToken, fronteggBaseUrl, initialMetadata }: ProfileEditModalProps) {
-  const baseUrl = useMemo(() => fronteggBaseUrl || process.env.NEXT_PUBLIC_FRONTEGG_BASE_URL || "https://dignifiedlabs-dev.frontegg.com", [fronteggBaseUrl]);
+  const baseUrl = useMemo(() => fronteggBaseUrl || process.env.NEXT_PUBLIC_FRONTEGG_BASE_URL, [fronteggBaseUrl]);
 
   const [university, setUniversity] = useState("");
   const [qualification, setQualification] = useState("");
