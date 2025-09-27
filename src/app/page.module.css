@@ -6,32 +6,19 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
+  padding: 0;
   font-family: var(--font-geist-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
-}
+/* Disable dark overrides to keep bright theme */
 
 .main {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  gap: 40px;
 }
 
 .main ol {
@@ -81,8 +68,8 @@
 }
 
 a.primary {
-  background: var(--foreground);
-  color: var(--background);
+  background: var(--accent);
+  color: var(--accent-contrast);
   gap: 8px;
 }
 
@@ -110,12 +97,12 @@ a.secondary {
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
-    background: var(--button-primary-hover);
+    background: var(--accent-hover);
     border-color: transparent;
   }
 
   a.secondary:hover {
-    background: var(--button-secondary-hover);
+    background: var(--surface);
     border-color: transparent;
   }
 
@@ -128,7 +115,6 @@ a.secondary {
 @media (max-width: 600px) {
   .page {
     padding: 32px;
-    padding-bottom: 80px;
   }
 
   .main {
@@ -160,8 +146,180 @@ a.secondary {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+/* Landing page styles */
+.landingContent {
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.heroSection h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  background: linear-gradient(135deg, var(--accent), #4d90ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSection p {
+  font-size: 1.25rem;
+  color: #666;
+  margin: 0 0 48px 0;
+  line-height: 1.6;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+  margin: 48px 0;
+}
+
+.feature {
+  padding: 24px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.feature h3 {
+  margin: 16px 0 8px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.feature p {
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ctaSection {
+  margin-top: 48px;
+}
+
+.loginButton {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.loginButton:hover {
+  background: var(--accent-hover);
+}
+
+/* Authenticated content styles */
+.authenticatedContent {
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.welcomeSection {
+  margin-bottom: 40px;
+}
+
+.profileImage {
+  border-radius: 50%;
+  margin-bottom: 24px;
+  border: 4px solid var(--accent);
+}
+
+.welcomeSection h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: #333;
+}
+
+.welcomeSection p {
+  font-size: 1.125rem;
+  color: #666;
+  margin: 0;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primaryButton, .secondaryButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.primaryButton {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.primaryButton:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  background: #fff;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+.secondaryButton:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  transform: translateY(-2px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main {
+    padding: 24px 16px;
+  }
+  
+  .heroSection h1 {
+    font-size: 2rem;
+  }
+  
+  .heroSection p {
+    font-size: 1rem;
+  }
+  
+  .features {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .primaryButton, .secondaryButton {
+    width: 100%;
+    max-width: 280px;
   }
 }
