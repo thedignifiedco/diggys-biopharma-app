@@ -44,9 +44,8 @@ export default function Home() {
             
             <div className={styles.features}>
               <div className={styles.feature}>
-                <Image src="/frontegg.png" alt="Security" width={40} height={40} />
                 <h3>Secure Authentication</h3>
-                <p>Built with Frontegg&apos;s robust authentication system</p>
+                <p>Built with Frontegg&apos;s robust authentication solution</p>
               </div>
               <div className={styles.feature}>
                 <h3>Profile Management</h3>
