@@ -44,10 +44,6 @@ export default function Home() {
             
             <div className={styles.features}>
               <div className={styles.feature}>
-                <h3>Secure Authentication</h3>
-                <p>Built with Frontegg&apos;s robust authentication solution</p>
-              </div>
-              <div className={styles.feature}>
                 <h3>Profile Management</h3>
                 <p>Complete user profile with custom metadata fields</p>
               </div>

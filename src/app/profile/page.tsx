@@ -3,10 +3,12 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import { useAuth } from "@frontegg/nextjs";
 import { AdminPortal } from "@frontegg/nextjs";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import ProfileEditModal from "@/components/ProfileEditModal";
 
 export default function ProfilePage() {
   const { isAuthenticated, user } = useAuth();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   type FronteggUserLite = {
     accessToken?: string;
@@ -75,6 +77,14 @@ export default function ProfilePage() {
   const handleSecuritySettings = useCallback(() => {
     AdminPortal.show();
   }, []);
+
+  // Redirect unauthenticated users to homepage
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, router]);
+
   useEffect(() => {
     const parseMaybeJson = (val: unknown): Record<string, unknown> | undefined => {
       if (!val) return undefined;
@@ -113,20 +123,6 @@ export default function ProfilePage() {
     load();
     return () => { aborted = true; };
   }, [isAuthenticated, accessToken, baseUrl, jwtUser?.metadata, jwtUser?.phoneNumber, jwtUser?.profilePictureUrl, refreshCounter]);
-
-  if (!isAuthenticated) {
-    return <div>Please sign in to view your profile.</div>;
-  }
-
-  
-
-//  const metadata: Record<string, unknown> = (jwtUser?.metadata as Record<string, unknown>) || {};
-//  const getMetaText = (key: string): string => {
-//    const value = metadata[key];
-//    if (value == null) return "-";
-//    if (typeof value === "string") return value || "-";
-//    return String(value);
-//  };
 
   return (
     <div style={{ 
