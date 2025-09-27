@@ -511,6 +511,12 @@ export default function AdminPage() {
                       </h4>
                       <div style={{ display: "grid", gap: 8 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                          <span style={{ color: "#6b7280", fontSize: "0.875rem" }}>Company:</span>
+                          <span style={{ color: "#111827", fontSize: "0.875rem", fontWeight: 500 }}>
+                            {String(metadata.company || "Not specified")}
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                           <span style={{ color: "#6b7280", fontSize: "0.875rem" }}>Job Title:</span>
                           <span style={{ color: "#111827", fontSize: "0.875rem", fontWeight: 500 }}>
                             {String(metadata.jobTitle || "Not specified")}

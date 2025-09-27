@@ -172,6 +172,14 @@ export default function ProfilePage() {
             <div style={{ marginTop: 4, color: "#666" }}>{resolvedPhone || "-"}</div>
           </div>
           <div style={{ padding: 16, background: "#f8f9fa", borderRadius: 8 }}>
+            <strong style={{ color: "#333" }}>Company:</strong>
+            <div style={{ marginTop: 4, color: "#666" }}>{String(resolvedMetadata.company ?? "-")}</div>
+          </div>
+          <div style={{ padding: 16, background: "#f8f9fa", borderRadius: 8 }}>
+            <strong style={{ color: "#333" }}>Job Title:</strong>
+            <div style={{ marginTop: 4, color: "#666" }}>{String(resolvedMetadata.jobTitle ?? "-")}</div>
+          </div>
+          <div style={{ padding: 16, background: "#f8f9fa", borderRadius: 8 }}>
             <strong style={{ color: "#333" }}>University/College:</strong>
             <div style={{ marginTop: 4, color: "#666" }}>{String(resolvedMetadata.university ?? "-")}</div>
           </div>

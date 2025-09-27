@@ -25,6 +25,8 @@ export default function UserEditModal({ isOpen, onClose, onUpdated, user, vendor
 
   const [name, setName] = useState(user?.name || "");
   const [phone, setPhone] = useState(user?.phoneNumber || "");
+  const [company, setCompany] = useState(String(initialMd.company ?? ""));
+  const [jobTitle, setJobTitle] = useState(String(initialMd.jobTitle ?? ""));
   const [university, setUniversity] = useState(String(initialMd.university ?? ""));
   const [qualification, setQualification] = useState(String(initialMd.qualification ?? ""));
   const [graduationYear, setGraduationYear] = useState(String(initialMd.graduationYear ?? ""));
@@ -42,6 +44,8 @@ export default function UserEditModal({ isOpen, onClose, onUpdated, user, vendor
     setName(user?.name || "");
     setPhone(user?.phoneNumber || "");
     const md = parseMaybeJson(user?.metadata);
+    setCompany(String(md.company ?? ""));
+    setJobTitle(String(md.jobTitle ?? ""));
     setUniversity(String(md.university ?? ""));
     setQualification(String(md.qualification ?? ""));
     setGraduationYear(String(md.graduationYear ?? ""));
@@ -67,6 +71,8 @@ export default function UserEditModal({ isOpen, onClose, onUpdated, user, vendor
 
       const mergedMetadata = {
         ...parseMaybeJson(user?.metadata),
+        company,
+        jobTitle,
         university,
         qualification,
         graduationYear,
@@ -123,6 +129,14 @@ export default function UserEditModal({ isOpen, onClose, onUpdated, user, vendor
           <label style={{ display: "grid", gap: 6 }}>
             <span>Phone</span>
             <input value={phone} onChange={(e) => setPhone(e.target.value)} style={{ padding: 10, borderRadius: 8, border: "1px solid #e5e7eb", background: "#fff" }} />
+          </label>
+          <label style={{ display: "grid", gap: 6 }}>
+            <span>Company</span>
+            <input value={company} onChange={(e) => setCompany(e.target.value)} style={{ padding: 10, borderRadius: 8, border: "1px solid #e5e7eb", background: "#fff" }} />
+          </label>
+          <label style={{ display: "grid", gap: 6 }}>
+            <span>Job Title</span>
+            <input value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} style={{ padding: 10, borderRadius: 8, border: "1px solid #e5e7eb", background: "#fff" }} />
           </label>
           <label style={{ display: "grid", gap: 6 }}>
             <span>Name of University or College</span>

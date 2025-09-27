@@ -15,6 +15,8 @@ type ProfileEditModalProps = {
 export default function ProfileEditModal({ isOpen, onClose, onUpdated, user, accessToken, fronteggBaseUrl, initialMetadata }: ProfileEditModalProps) {
   const baseUrl = useMemo(() => fronteggBaseUrl || process.env.NEXT_PUBLIC_FRONTEGG_BASE_URL, [fronteggBaseUrl]);
 
+  const [company, setCompany] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
   const [university, setUniversity] = useState("");
   const [qualification, setQualification] = useState("");
   const [graduationYear, setGraduationYear] = useState("");
@@ -35,6 +37,8 @@ export default function ProfileEditModal({ isOpen, onClose, onUpdated, user, acc
   useEffect(() => {
     if (!isOpen) return;
     const metadata = (initialMetadata ?? (user?.metadata ?? {})) as Record<string, unknown>;
+    setCompany((metadata.company as string) || "");
+    setJobTitle((metadata.jobTitle as string) || "");
     setUniversity((metadata.university as string) || "");
     setQualification((metadata.qualification as string) || "");
     setGraduationYear((metadata.graduationYear as string) || "");
@@ -50,6 +54,8 @@ export default function ProfileEditModal({ isOpen, onClose, onUpdated, user, acc
     setProfilePictureFile(null);
     setProfilePicturePreview("");
     setUploadingImage(false);
+    setCompany("");
+    setJobTitle("");
   }, [isOpen, user, initialMetadata]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,6 +161,8 @@ export default function ProfileEditModal({ isOpen, onClose, onUpdated, user, acc
       })();
       const updatedMetadata = {
         ...existingMetadata,
+        company,
+        jobTitle,
         university,
         qualification,
         graduationYear,
@@ -293,6 +301,14 @@ export default function ProfileEditModal({ isOpen, onClose, onUpdated, user, acc
           <label style={{ display: "grid", gap: 6 }}>
             <span>Phone</span>
             <input value={phone} onChange={(e) => setPhone(e.target.value)} style={{ padding: 10, borderRadius: 8, border: "1px solid #e5e7eb", background: "#fff" }} />
+          </label>
+          <label style={{ display: "grid", gap: 6 }}>
+            <span>Company</span>
+            <input value={company} onChange={(e) => setCompany(e.target.value)} style={{ padding: 10, borderRadius: 8, border: "1px solid #e5e7eb", background: "#fff" }} />
+          </label>
+          <label style={{ display: "grid", gap: 6 }}>
+            <span>Job Title</span>
+            <input value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} style={{ padding: 10, borderRadius: 8, border: "1px solid #e5e7eb", background: "#fff" }} />
           </label>
           <label style={{ display: "grid", gap: 6 }}>
             <span>Name of University or College</span>

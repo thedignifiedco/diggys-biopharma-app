@@ -3,16 +3,19 @@ import { useAuth, useAuthActions } from "@frontegg/nextjs";
 import { useCallback, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { isAuthenticated, user } = useAuth();
   const { logout } = useAuthActions();
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const handleLogout = useCallback(() => {
     logout();
-  }, [logout]);
+    router.push('/');
+  }, [logout, router]);
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
