@@ -1,12 +1,13 @@
 {
-  "name": "frontegg-custom-admin-ui-sample",
+  "name": "diggys-biopharma-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "configure-login-overrides": "ts-node scripts/configure-login-overrides.ts"
   },
   "dependencies": {
     "@frontegg/nextjs": "^9.2.9",
@@ -21,6 +22,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

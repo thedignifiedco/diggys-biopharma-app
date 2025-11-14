@@ -83,16 +83,17 @@ export default function AdminPage() {
   }, [vendorToken]);
 
   // Fetch user subscription data
-  const fetchUserSubscriptions = useCallback(async (userId: string): Promise<FronteggUser['subscriptions']> => {
+  const fetchUserSubscriptions = useCallback(async (userId: string, token?: string): Promise<FronteggUser['subscriptions']> => {
     try {
-      if (!vendorToken) {
+      const tokenToUse = token || vendorToken;
+      if (!tokenToUse) {
         console.error("No vendor token available");
         return [];
       }
 
       const response = await fetch(`https://api.frontegg.com/entitlements/resources/entitlements/v2?userId=${userId}`, {
         headers: {
-          "Authorization": `Bearer ${vendorToken}`,
+          "Authorization": `Bearer ${tokenToUse}`,
         },
       });
 
@@ -116,16 +117,17 @@ export default function AdminPage() {
   }, [vendorToken]);
 
   // Fetch all subscription plans to create a name mapping
-  const fetchSubscriptionPlans = useCallback(async (): Promise<Record<string, string>> => {
+  const fetchSubscriptionPlans = useCallback(async (token?: string): Promise<Record<string, string>> => {
     try {
-      if (!vendorToken) {
+      const tokenToUse = token || vendorToken;
+      if (!tokenToUse) {
         console.error("No vendor token available");
         return {};
       }
 
       const response = await fetch("https://api.frontegg.com/entitlements/resources/plans/v1", {
         headers: {
-          "Authorization": `Bearer ${vendorToken}`,
+          "Authorization": `Bearer ${tokenToUse}`,
         },
       });
 
@@ -174,8 +176,8 @@ export default function AdminPage() {
       setLoading(true);
       setError(null);
       try {
-        // Initialize vendor token first
-        await initializeVendorToken();
+        // Initialize vendor token first and use the returned token directly
+        const token = await initializeVendorToken();
 
         const res = await fetch(`${baseUrl}/identity/resources/users/v2`, {
           headers: { Authorization: `Bearer ${accessToken}` },
@@ -193,14 +195,14 @@ export default function AdminPage() {
           ? (data as FronteggUser[])
           : [];
 
-        // Fetch subscription plans mapping first
-        const planMapping = await fetchSubscriptionPlans();
+        // Fetch subscription plans mapping first - pass token directly
+        const planMapping = await fetchSubscriptionPlans(token);
         setPlanNameMap(planMapping);
 
-        // Fetch subscription data for each user
+        // Fetch subscription data for each user - pass token directly
         const usersWithSubscriptions = await Promise.all(
           normalized.map(async (user) => {
-            const subscriptions = await fetchUserSubscriptions(user.id);
+            const subscriptions = await fetchUserSubscriptions(user.id, token);
             // Map plan names using the fetched plan mapping
             const subscriptionsWithNames = (subscriptions || []).map(sub => ({
               ...sub,

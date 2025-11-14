@@ -1,5 +1,5 @@
 "use client";
-import { useAuth, useAuthActions } from "@frontegg/nextjs";
+import { useAuth, useAuthActions, useLoginWithRedirect } from "@frontegg/nextjs";
 import { useCallback, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,22 +7,25 @@ import Link from "next/link";
 export default function Header() {
   const { isAuthenticated, user } = useAuth();
   const { logout } = useAuthActions();
+  const loginWithRedirect = useLoginWithRedirect();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const handleLogout = useCallback(() => {
     logout();
-    // Use setTimeout to ensure logout completes before redirect
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 100);
   }, [logout]);
+
+  const handleLogin = useCallback(() => {
+    loginWithRedirect();
+  }, [loginWithRedirect]);
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
   }, []);
 
   useEffect(() => {
+    setIsMounted(true);
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -88,6 +91,16 @@ export default function Header() {
               gap: 16
             }}>
               <nav style={{ display: "flex", gap: 16 }}>
+                <Link href="/research" style={{ 
+                  color: "inherit", 
+                  textDecoration: "none",
+                  padding: "8px 12px",
+                  borderRadius: 6,
+                  transition: "background-color 0.2s",
+                  fontSize: "0.875rem"
+                }}>
+                  Research
+                </Link>
                 <Link href="/admin" style={{ 
                   color: "inherit", 
                   textDecoration: "none",
@@ -197,7 +210,31 @@ export default function Header() {
           )
         ) : (
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ fontSize: "0.875rem" }}>Welcome to Frontegg Demo</span>
+            {isMounted && !isMobile && (
+              <span style={{ fontSize: "0.875rem" }}>Welcome to Frontegg Demo</span>
+            )}
+            <button 
+              onClick={handleLogin}
+              style={{
+                background: "rgba(255,255,255,0.2)",
+                border: "none",
+                color: "inherit",
+                padding: "8px 16px",
+                borderRadius: 6,
+                cursor: "pointer",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                transition: "background-color 0.2s"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.2)";
+              }}
+            >
+              Login
+            </button>
           </div>
         )}
       </div>
@@ -212,6 +249,21 @@ export default function Header() {
           flexDirection: "column",
           gap: 12
         }}>
+          <Link 
+            href="/research" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{ 
+              color: "inherit", 
+              textDecoration: "none",
+              padding: "12px 16px",
+              borderRadius: 6,
+              background: "rgba(255,255,255,0.1)",
+              fontSize: "0.875rem",
+              fontWeight: 500
+            }}
+          >
+            Research Portal
+          </Link>
           <Link 
             href="/admin" 
             onClick={() => setIsMobileMenuOpen(false)}

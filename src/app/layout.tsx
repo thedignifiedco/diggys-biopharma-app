@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { FronteggAppProvider } from "@frontegg/nextjs/app";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import OnboardingGuard from "@/components/OnboardingGuard";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Frontegg Demo App",
-  description: "A comprehensive demo showcasing Frontegg authentication, profile management, and admin capabilities",
+  title: "Dignified BioPharma App - Clinical Research Portal",
+  description: "A comprehensive demo showcasing Dignified BioPharma authentication, profile management, and admin capabilities",
 };
 
 export default function RootLayout({
@@ -27,6 +28,7 @@ export default function RootLayout({
 }>) {
   const authOptions = {
     keepSessionAlive: true, // Uncomment this in order to maintain the session alive
+    // routes: { authenticatedUrl: '/profile' } 
   };
 
   const metadata = {
@@ -80,6 +82,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`} style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <FronteggAppProvider authOptions={authOptions} metadata={metadata} customLoader={true}>
+          <OnboardingGuard />
           <Header />
           <main style={{ flex: 1 }}>
             {children}
