@@ -35,7 +35,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const requestedAppId = req.headers['frontegg-requested-application-id'] as string | undefined;
   
   // Replace with your actual application ID
-  const ALLOWED_APPLICATION_ID = '834a523d-9a3c-4678-9212-e70f930f07b4';
+  const ALLOWED_APPLICATION_ID = process.env.NEXT_PUBLIC_FRONTEGG_APP_ID;
   
   // Only return overrides if the application ID matches
   if (requestedAppId !== ALLOWED_APPLICATION_ID) {
